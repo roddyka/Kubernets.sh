@@ -177,7 +177,7 @@ def main():
     tk.Label(root, text="Docker Image Manager", font=("Arial", 16, "bold")).pack(pady=10)
     tk.Button(root, text="Save Docker Image", command=save_docker_image, width=30, bg="lightgreen").pack(pady=5)
     tk.Button(root, text="Send Docker Image", command=send_docker_image, width=30, bg="lightblue").pack(pady=5)
-    tk.Button(root, text="Import Docker Image", command=import_docker_image, width=30, bg="lightyellow").pack(pady=5)
+    # tk.Button(root, text="Import Docker Image", command=import_docker_image, width=30, bg="lightyellow").pack(pady=5)
     tk.Button(root, text="How to Use", command=show_how_to_use, width=30, bg="lightgrey").pack(pady=5)
     tk.Button(root, text="Exit", command=root.quit, width=30, bg="lightcoral").pack(pady=5)
 
