@@ -76,9 +76,9 @@ docker save -o my-image-v1.tar my-image:v1
 
 ## Extra: deploy_image.py
 An additional file, deploy_image.py, is currently in development with a graphical user interface (GUI) to assist new Docker users in saving their images. This will provide a more user-friendly experience compared to the command-line interface.
-
-- to run: python deploy_image.py
 ![Screen](assets/display.png)
+- to run: python deploy_image.py
+
 
 ------------------------------------------Welcome-------------------------------------------------------------- 
  "   #####   ####      #####   ######   ##   ##           #####    #######  ######   ####      #####   ##  ## ";
