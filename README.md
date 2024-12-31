@@ -51,8 +51,6 @@ The script provides an interactive menu with the following options:
 - Enter the IP addresses or hostnames of the target server(s).
 - If you need to import the `.tar` file into a Kubernetes cluster, choose option "3" and follow the instructions.
 
-![Screen](assets/display.png)
-
 
 ## Script Structure
 
@@ -80,6 +78,7 @@ docker save -o my-image-v1.tar my-image:v1
 An additional file, deploy_image.py, is currently in development with a graphical user interface (GUI) to assist new Docker users in saving their images. This will provide a more user-friendly experience compared to the command-line interface.
 
 - to run: python deploy_image.py
+![Screen](assets/display.png)
 
 ------------------------------------------Welcome-------------------------------------------------------------- 
  "   #####   ####      #####   ######   ##   ##           #####    #######  ######   ####      #####   ##  ## ";
