@@ -74,17 +74,83 @@ def send_docker_image():
         except subprocess.CalledProcessError:
             messagebox.showerror("Error", f"Failed to send the image to {server}.")
 
+# def import_docker_image():
+#     tar_file = filedialog.askopenfilename(title="Select the tar file", filetypes=[("Tar Files", "*.tar")])
+#     if not tar_file:
+#         messagebox.showerror("Error", "No tar file selected.")
+#         return
+
+#     try:
+#         subprocess.run(f"docker load -i {tar_file}", shell=True, check=True)
+#         messagebox.showinfo("Success", "Image imported successfully.")
+#     except subprocess.CalledProcessError:
+#         messagebox.showerror("Error", "Failed to import the image.")
 def import_docker_image():
-    tar_file = filedialog.askopenfilename(title="Select the tar file", filetypes=[("Tar Files", "*.tar")])
-    if not tar_file:
-        messagebox.showerror("Error", "No tar file selected.")
+    # Solicitar os endereços IP dos servidores
+    servers = []
+    while True:
+        server = simpledialog.askstring("Import Docker Image", "Enter the server IP address (leave empty to finish):")
+        if not server:
+            break
+        servers.append(server)
+
+    if not servers:
+        messagebox.showerror("Error", "No servers added.")
         return
 
-    try:
-        subprocess.run(f"docker load -i {tar_file}", shell=True, check=True)
-        messagebox.showinfo("Success", "Image imported successfully.")
-    except subprocess.CalledProcessError:
-        messagebox.showerror("Error", "Failed to import the image.")
+    # Função para procurar arquivos .tar em cada servidor
+    def search_tar_files(server):
+        try:
+            result = subprocess.check_output(f"ssh {server} 'find ~ -name \"*.tar\"'", shell=True)
+            tar_files = result.decode('utf-8').splitlines()
+            return tar_files
+        except subprocess.CalledProcessError:
+            messagebox.showerror("Error", f"Failed to search for tar files on {server}.")
+            return []
+
+    # Função de confirmação de seleção do arquivo
+    def confirm_selection(selected_file, server):
+        if not selected_file:
+            messagebox.showerror("Error", "No tar file selected.")
+            return
+
+        # Importar o arquivo Docker
+        try:
+            subprocess.run(f"sudo ctr -n=k8s.io images import {selected_file}", shell=True, check=True)
+            messagebox.showinfo("Success", f"Image imported successfully from {server}.")
+        except subprocess.CalledProcessError:
+            messagebox.showerror("Error", f"Failed to import the image from {server}.")
+
+    # Iterar sobre os servidores
+    for server in servers:
+        tar_files = search_tar_files(server)
+        
+        if tar_files:
+            # Janela para seleção do arquivo
+            select_window = tk.Toplevel(root)
+            select_window.title(f"Select Docker Image from {server}")
+            select_window.geometry("500x400")
+
+            title_label = tk.Label(select_window, text=f"Select a tar file from {server}:", font=("Arial", 14, "bold"))
+            title_label.pack(pady=10)
+
+            var = tk.StringVar()
+
+            # Adicionar arquivos .tar com radio buttons
+            frame = tk.Frame(select_window)
+            frame.pack(fill="both", expand=True, padx=10, pady=10)
+            for file in tar_files:
+                tk.Radiobutton(frame, text=file, variable=var, value=file, font=("Arial", 12)).pack(anchor="w", pady=2)
+
+            # Botões de ação
+            button_frame = tk.Frame(select_window)
+            button_frame.pack(pady=10)
+            tk.Button(button_frame, text="Confirm Selection", command=lambda: confirm_selection(var.get(), server), width=20, bg="lightblue").pack(side="left", padx=10)
+            tk.Button(button_frame, text="Cancel", command=select_window.destroy, width=20, bg="lightcoral").pack(side="right", padx=10)
+
+        else:
+            messagebox.showinfo("No Files Found", f"No tar files found on {server}.")
+
 
 def show_how_to_use():
     instructions = (
