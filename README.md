@@ -67,6 +67,10 @@ The script follows these steps:
 - **SCP**: To transfer files using `scp`, you need SSH access to the target servers.
 - **Kubectl**: To import images into a Kubernetes cluster.
 
+## Python version screen
+![Screen](assets/display.png)
+
+
 ## Example Command to Build and Save an Image
 
 ```bash
@@ -76,7 +80,7 @@ docker save -o my-image-v1.tar my-image:v1
 
 ## Extra: deploy_image.py
 An additional file, deploy_image.py, is currently in development with a graphical user interface (GUI) to assist new Docker users in saving their images. This will provide a more user-friendly experience compared to the command-line interface.
-![Screen](assets/display.png)
+
 - to run: python deploy_image.py
 
 
