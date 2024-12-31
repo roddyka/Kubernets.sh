@@ -1,76 +1,85 @@
 # Docker Image Management Script
 
-Este script Bash foi desenvolvido para facilitar o gerenciamento de imagens Docker e sua transferência entre servidores. Com ele, é possível construir, salvar, transferir e importar imagens Docker para servidores locais ou clusters Kubernetes (K8s).
+This Bash script is designed to simplify the management of Docker images and their transfer between servers. It allows you to build, save, transfer, and import Docker images to local servers or Kubernetes (K8s) clusters.
 
-## Funcionalidades
+## Features
 
-O script oferece um menu interativo com as seguintes opções:
+The script provides an interactive menu with the following options:
 
-1. **Salvar tar da imagem**  
-   Construa uma imagem Docker e salve-a como um arquivo `.tar`.
+1. **Save Image as a TAR File**  
+   Build a Docker image and save it as a `.tar` file.
 
-2. **Enviar tar para os servidores**  
-   Envie um arquivo `.tar` de imagem Docker para um ou mais servidores remotos.
+2. **Send TAR File to Servers**  
+   Transfer a `.tar` Docker image file to one or more remote servers.
 
-3. **Importar tar já no servidor**  
-   Importe arquivos `.tar` para um cluster Kubernetes (K8s) ou outro servidor. **(Em construção)**
+3. **Import TAR on Server**  
+   Import `.tar` files to a Kubernetes cluster (K8s) or other servers. **(Under development)**
 
-4. **Sair**  
-   Encerra a execução do script.
+4. **Exit**  
+   Exit the script.
 
-5. **Sobre**  
-   Exibe informações sobre o script.
+5. **About**  
+   Display information about the script.
 
-## Pré-requisitos
+## Prerequisites
 
-- **Docker**: O Docker deve estar instalado e configurado no seu sistema.
-- **Acesso SSH**: É necessário ter acesso via SSH aos servidores de destino.
-- **Kubernetes (opcional)**: Se você deseja importar imagens para um cluster Kubernetes, é necessário ter o `kubectl` configurado e acesso ao cluster.
+- **Docker**: Docker must be installed and configured on your system.
+- **SSH Access**: SSH access to the target servers is required.
+- **Kubernetes (optional)**: If you wish to import images to a Kubernetes cluster, `kubectl` must be configured and you need access to the cluster.
 
-## Como usar
+## How to Use
 
-1. **Clone ou baixe o script** para o seu sistema local.
+1. **Clone or download the script** to your local system.
 
-2. **Torne o script executável**:
+2. **Make the script executable**:
     ```bash
     chmod +x deploy_images.sh
     ```
 
-3. **Execute o script**:
+3. **Run the script**:
     ```bash
     ./deploy_images.sh
     ```
 
-4. O menu interativo será exibido. Selecione a opção desejada, digitando o número correspondente.
+4. The interactive menu will be displayed. Select the desired option by entering the corresponding number.
 
-### Exemplo de fluxo:
+### Example Flow:
 
-- Escolha "1" para salvar uma imagem Docker.
-- Informe o nome da imagem Docker que deseja criar e o diretório onde deseja salvar o arquivo `.tar`.
-- Escolha "2" para enviar o arquivo `.tar` para servidores remotos.
-- Forneça o(s) endereço(s) de IP ou hostname(s) do(s) servidor(es) para onde o arquivo será enviado.
-- Se você precisar importar o arquivo `.tar` para um cluster Kubernetes, escolha a opção "3" e siga as instruções.
+- Choose "1" to save a Docker image.
+- Provide the name of the Docker image to create and the directory where the `.tar` file will be saved.
+- Choose "2" to send the `.tar` file to remote servers.
+- Enter the IP addresses or hostnames of the target server(s).
+- If you need to import the `.tar` file into a Kubernetes cluster, choose option "3" and follow the instructions.
 
-## Estrutura do Script
+![Screen](assets/display.png)
 
-O script possui as seguintes etapas:
 
-1. **Construção da Imagem Docker**: Utiliza o comando `docker build` para criar a imagem a partir de um `Dockerfile`.
-2. **Salvamento da Imagem**: Usa o comando `docker save` para criar um arquivo `.tar` com a imagem.
-3. **Envio para Servidores**: Envia o arquivo `.tar` para servidores remotos via `scp` ou outro protocolo de sua escolha.
-4. **Importação em Kubernetes**: Caso necessário, utiliza o comando `kubectl` para importar a imagem para um cluster Kubernetes.
+## Script Structure
 
-## Dependências
+The script follows these steps:
 
-- **Docker**: Certifique-se de ter o Docker instalado e em funcionamento.
-- **SCP**: Para transferir arquivos via `scp`, você precisará de acesso SSH configurado nos servidores.
-- **Kubectl**: Para importar imagens em um cluster Kubernetes.
+1. **Build the Docker Image**: Uses the `docker build` command to create the image from a `Dockerfile`.
+2. **Save the Image**: Uses the `docker save` command to create a `.tar` file from the image.
+3. **Send to Servers**: Transfers the `.tar` file to remote servers using `scp` or another protocol of your choice.
+4. **Import into Kubernetes**: If needed, uses `kubectl` to import the image into a Kubernetes cluster.
 
-## Exemplo de Comando para Construir e Salvar uma Imagem
+## Dependencies
+
+- **Docker**: Ensure Docker is installed and running on your system.
+- **SCP**: To transfer files using `scp`, you need SSH access to the target servers.
+- **Kubectl**: To import images into a Kubernetes cluster.
+
+## Example Command to Build and Save an Image
 
 ```bash
-docker build -t minha-imagem:v1 .
-docker save -o minha-imagem-v1.tar minha-imagem:v1
+docker build -t my-image:v1 .
+docker save -o my-image-v1.tar my-image:v1
+
+
+## Extra: deploy_image.py
+An additional file, deploy_image.py, is currently in development with a graphical user interface (GUI) to assist new Docker users in saving their images. This will provide a more user-friendly experience compared to the command-line interface.
+
+- to run: python deploy_image.py
 
 ------------------------------------------Welcome-------------------------------------------------------------- 
  "   #####   ####      #####   ######   ##   ##           #####    #######  ######   ####      #####   ##  ## ";
